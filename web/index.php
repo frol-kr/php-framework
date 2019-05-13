@@ -2,16 +2,17 @@
 
 declare(strict_type = 1);
 
-use Symfony\Component\HttpFoundation\Response;
+use FrolKr\PhpFramework\Controller\FooController;
+use FrolKr\PhpFramework\Controller\IndexController;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
 if ($request->get('page') === 'foo') {
-    $response = new Response('Foo page<br>');
+    $response = (new FooController())->run($request);
 } else {
-    $response = new Response('Index page<br>');
+    $response = (new IndexController())->run($request);
 }
 
 echo $response->getContent();
