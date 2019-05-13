@@ -2,12 +2,16 @@
 
 declare(strict_type = 1);
 
-if (isset($_GET['page']) && $_GET['page'] === 'foo') {
-    echo "Foo page<br>";
+use Symfony\Component\HttpFoundation\Response;
+
+require __DIR__.'/../vendor/autoload.php';
+
+$request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
+
+if ($request->get('page') === 'foo') {
+    $response = new Response('Foo page<br>');
 } else {
-    echo "Index page<br>";
+    $response = new Response('Index page<br>');
 }
 
-if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1') {
-    echo "(Admin stuff)";
-}
+echo $response->getContent();
