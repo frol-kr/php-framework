@@ -1,0 +1,15 @@
+version: '2'
+services:
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - .:/app
+        ports:
+            - "8080:80"
+        links:
+            - php
+    php:
+        build: .
+        volumes:
+            - .:/app

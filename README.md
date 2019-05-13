@@ -1,2 +1,2 @@
 # php-framework
-Simple OOP framework
+Simple php framework

@@ -1,0 +1,13 @@
+{
+    "name": "frol-kr/php-framework",
+    "description": "A simple php framework",
+    "type": "project",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Frol Kryuchkov",
+            "email": "frol.kruchkov@gmail.com"
+        }
+    ],
+    "require": {}
+}
