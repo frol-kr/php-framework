@@ -12,9 +12,10 @@ class FooController
 {
     /**
      * @param ServerRequestInterface $request
+     * @param array $args
      * @return ResponseInterface
      */
-    public function run(ServerRequestInterface $request): ResponseInterface {
-        return new Response(200, [], 'Foo page', '1.1');
+    public function run(ServerRequestInterface $request, array $args): ResponseInterface {
+        return new Response(200, [], 'Foo page ' . htmlspecialchars($args['name']), '1.1');
     }
 }

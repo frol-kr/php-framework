@@ -41,7 +41,7 @@ try {
     /** @var string $controller */
     $action = $handlerMeta['_action'];
 
-    $response = (new $controller)->$action($request);
+    $response = (new $controller)->$action($request, $handlerMeta);
 } catch (ResourceNotFoundException $e) {
     $response = $psr17Factory->createResponse(404, 'Handler not found');
 } catch (Exception $e) {
