@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace FrolKr\PhpFramework;
 
 use FrolKr\PhpFramework\Middleware\ErrorHandler;
-use FrolKr\PhpFramework\Middleware\Printer;
 use FrolKr\PhpFramework\Middleware\SymfonyRouting;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -37,7 +36,6 @@ class App implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface {
         $relay = $this->relayBuilder->newInstance([
-            new Printer(),
             new ErrorHandler(),
             new SymfonyRouting($this->router)
         ]);

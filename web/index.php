@@ -5,6 +5,7 @@ declare(strict_type = 1);
 use FrolKr\PhpFramework\App;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Router;
@@ -27,4 +28,5 @@ $request = (new \Nyholm\Psr7Server\ServerRequestCreator(
     $psrHttpFactory)
 )->fromGlobals();
 
-(new App($router, new Relay\RelayBuilder()))->handle($request);
+$response = (new App($router, new Relay\RelayBuilder()))->handle($request);
+(new HttpFoundationFactory)->createResponse($response)->send();
