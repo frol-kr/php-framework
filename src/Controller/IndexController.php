@@ -7,14 +7,15 @@ namespace FrolKr\PhpFramework\Controller;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class IndexController
+class IndexController implements RequestHandlerInterface
 {
     /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
+     * @inheritdoc
      */
-    public function run(ServerRequestInterface $request): ResponseInterface {
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
         return new Response(200, [], 'Index page<br>', '1.1');
     }
 }

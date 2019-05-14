@@ -2,13 +2,13 @@ index:
   path: /
   controller: FrolKr\PhpFramework\Controller\IndexController
   methods: ['GET']
-  defaults: { _action: 'run' }
+  defaults: { _action: 'handle' }
 
 foo:
   path: /foo/{name}
   controller: FrolKr\PhpFramework\Controller\FooController
   methods: ['GET']
-  defaults: { _action: 'run' }
+  defaults: { _action: 'handle' }
   requirements:
     name: '\w+'
 
@@ -16,6 +16,6 @@ foo_alias:
   path: /foo_alias/{name}
   controller: FrolKr\PhpFramework\Controller\FooController
   methods: ['GET']
-  defaults: { _action: 'run' }
+  defaults: { _action: 'handle' }
   requirements:
     name: '\w+'
