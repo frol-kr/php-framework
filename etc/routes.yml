@@ -1,0 +1,21 @@
+index:
+  path: /
+  controller: FrolKr\PhpFramework\Controller\IndexController
+  methods: ['GET']
+  defaults: { _action: 'run' }
+
+foo:
+  path: /foo/{name}
+  controller: FrolKr\PhpFramework\Controller\FooController
+  methods: ['GET']
+  defaults: { _action: 'run' }
+  requirements:
+    name: '\w+'
+
+foo_alias:
+  path: /foo_alias/{name}
+  controller: FrolKr\PhpFramework\Controller\FooController
+  methods: ['GET']
+  defaults: { _action: 'run' }
+  requirements:
+    name: '\w+'
