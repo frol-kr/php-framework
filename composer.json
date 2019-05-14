@@ -12,7 +12,12 @@
     "require": {
         "psr/http-message": "^1.0",
         "symfony/http-foundation": "^4.2",
-        "symfony/psr-http-message-bridge": "^1.2"
+        "symfony/psr-http-message-bridge": "^1.2",
+        "symfony/routing": "^4.2",
+        "symfony/config": "^4.2",
+        "symfony/yaml": "^4.2",
+        "psr/http-factory": "^1.0",
+        "nyholm/psr7": "^1.1"
     },
     "autoload": {
         "psr-4": {

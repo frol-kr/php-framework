@@ -4,16 +4,17 @@ declare(strict_type = 1);
 
 namespace FrolKr\PhpFramework\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class FooController
 {
     /**
-     * @param Request $request
-     * @return Response
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      */
-    public function run(Request $request): Response {
-        return new Response('Foo page<br>');
+    public function run(ServerRequestInterface $request): ResponseInterface {
+        return new Response(200, [], 'Foo page', '1.1');
     }
 }
