@@ -30,6 +30,11 @@ class SymfonyRouting implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
+        if ($response->getStatusCode() >= 300) {
+            return $response;
+        }
+
         $symfonyRequest = (new HttpFoundationFactory())->createRequest($request);
         $this->routing->setContext((new RequestContext())->fromRequest($symfonyRequest));
         $handlerMeta = $this->routing->matchRequest($symfonyRequest);
@@ -41,6 +46,7 @@ class SymfonyRouting implements MiddlewareInterface
 
         /** @var RequestHandlerInterface $controllerInstance */
         $controllerInstance = new $controller();
+
         return $controllerInstance->$action($request, $handlerMeta);
     }
 }

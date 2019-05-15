@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace FrolKr\PhpFramework;
 
 use FrolKr\PhpFramework\Middleware\ErrorHandler;
+use FrolKr\PhpFramework\Middleware\ResponseFactory;
 use FrolKr\PhpFramework\Middleware\SymfonyRouting;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -20,14 +22,22 @@ class App implements RequestHandlerInterface
     /** @var RelayBuilder  */
     private $relayBuilder;
 
+    /** @var ResponseFactoryInterface */
+    private $httpResponseFactory;
+
     /**
      * @param Router $router
-     * @param $relayBuilder
+     * @param RelayBuilder $relayBuilder
+     * @param ResponseFactoryInterface $httpResponseFactory
      */
-    public function __construct(Router $router, RelayBuilder $relayBuilder)
-    {
+    public function __construct(
+        Router $router,
+        RelayBuilder $relayBuilder,
+        ResponseFactoryInterface $httpResponseFactory
+    ) {
         $this->router = $router;
         $this->relayBuilder = $relayBuilder;
+        $this->httpResponseFactory = $httpResponseFactory;
     }
 
     /**
@@ -37,7 +47,8 @@ class App implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface {
         $relay = $this->relayBuilder->newInstance([
             new ErrorHandler(),
-            new SymfonyRouting($this->router)
+            new SymfonyRouting($this->router),
+            new ResponseFactory($this->httpResponseFactory)
         ]);
         return $relay->handle($request);
     }

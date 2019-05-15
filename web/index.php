@@ -28,5 +28,5 @@ $request = (new \Nyholm\Psr7Server\ServerRequestCreator(
     $psrHttpFactory)
 )->fromGlobals();
 
-$response = (new App($router, new Relay\RelayBuilder()))->handle($request);
+$response = (new App($router, new Relay\RelayBuilder(), $psrHttpFactory))->handle($request);
 (new HttpFoundationFactory)->createResponse($response)->send();
