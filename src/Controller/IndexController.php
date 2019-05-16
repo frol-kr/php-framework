@@ -1,6 +1,6 @@
 <?php // src/Controller/IndexController.php
 
-declare(strict_type = 1);
+declare(strict_types = 1);
 
 namespace FrolKr\PhpFramework\Controller;
 
