@@ -29,5 +29,10 @@ $request = (new ServerRequestCreator(
     $psrHttpFactory
 ))->fromGlobals();
 
-$response = (new App($router, new Relay\RelayBuilder(), $psrHttpFactory))->handle($request);
-(new HttpFoundationFactory)->createResponse($response)->send();
+$app = (new App($router, new Relay\RelayBuilder(), $psrHttpFactory));
+
+$response = $app->handle($request);
+
+(new HttpFoundationFactory)
+    ->createResponse($response)
+    ->send();
