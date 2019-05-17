@@ -22,8 +22,12 @@ $router = new Router(
 );
 
 $psrHttpFactory = new Psr17Factory();
-$request = (new ServerRequestCreator($psrHttpFactory, $psrHttpFactory, $psrHttpFactory, $psrHttpFactory))
-    ->fromGlobals();
+$request = (new ServerRequestCreator(
+    $psrHttpFactory,
+    $psrHttpFactory,
+    $psrHttpFactory,
+    $psrHttpFactory
+))->fromGlobals();
 
 $response = (new App($router, new Relay\RelayBuilder(), $psrHttpFactory))->handle($request);
 (new HttpFoundationFactory)->createResponse($response)->send();
