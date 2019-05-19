@@ -31,7 +31,7 @@ class SymfonyRouting implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        if ($response->getStatusCode() >= 300) {
+        if ($response->getStatusCode() >= 300 && $response->getStatusCode() < 400) {
             return $response;
         }
 
