@@ -21,7 +21,8 @@
         "relay/relay": "^2.0",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
-        "nyholm/psr7-server": "^0.3.0"
+        "nyholm/psr7-server": "^0.3.0",
+        "symfony/dependency-injection": "^4.2"
     },
     "autoload": {
         "psr-4": {
