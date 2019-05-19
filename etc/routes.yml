@@ -11,11 +11,3 @@ foo:
   defaults: { _action: 'handle' }
   requirements:
     name: '\w+'
-
-foo_alias:
-  path: /foo_alias/{name}
-  controller: FrolKr\PhpFramework\Controller\FooController
-  methods: ['GET']
-  defaults: { _action: 'handle' }
-  requirements:
-    name: '\w+'
