@@ -13,3 +13,5 @@ services:
         build: .
         volumes:
             - .:/app
+        environment:
+          DEBUG: 'true'

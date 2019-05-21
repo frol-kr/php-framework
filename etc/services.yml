@@ -1,0 +1,63 @@
+parameters:
+  appRoot: !php/const APP_ROOT
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # controllers
+  FrolKr\PhpFramework\Controller\:
+    resource: '../src/Controller/*'
+    public: true
+
+  # middlewares
+  FrolKr\PhpFramework\Middleware\:
+    resource: '../src/Middleware/*'
+    public: true
+
+  # http factory
+  Nyholm\Psr7Server\ServerRequestCreatorInterface:
+    class: Nyholm\Psr7Server\ServerRequestCreator
+    autowire: true
+    public: true
+
+  Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory:
+    public: true
+
+  Psr\Http\Message\ResponseFactoryInterface:
+    class: Nyholm\Psr7\Factory\Psr17Factory
+
+  Psr\Http\Message\ServerRequestFactoryInterface:
+    class: Nyholm\Psr7\Factory\Psr17Factory
+
+  Psr\Http\Message\UriFactoryInterface:
+    class: Nyholm\Psr7\Factory\Psr17Factory
+
+  Psr\Http\Message\UploadedFileFactoryInterface:
+    class: Nyholm\Psr7\Factory\Psr17Factory
+
+  Psr\Http\Message\StreamFactoryInterface:
+    class: Nyholm\Psr7\Factory\Psr17Factory
+
+  # routing
+  Symfony\Component\Routing\Router:
+    class: Symfony\Component\Routing\Router
+    public: true
+    arguments:
+      $loader: '@Symfony\Component\Config\Loader\LoaderInterface'
+      $resource: 'routes.yml'
+      $options:
+        cache_dir: '/app/var/cache'
+
+  Symfony\Component\Config\Loader\LoaderInterface:
+    class: Symfony\Component\Routing\Loader\YamlFileLoader
+    arguments:
+      $locator: '@Symfony\Component\Config\FileLocatorInterface'
+
+  Symfony\Component\Config\FileLocatorInterface:
+    class: Symfony\Component\Config\FileLocator
+    arguments:
+      $paths:
+        - '/app/etc'

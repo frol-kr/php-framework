@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class FooController implements RequestHandlerInterface
+class NotFoundController implements RequestHandlerInterface
 {
     /** @var ResponseFactoryInterface */
     private $responseFactory;
@@ -24,13 +24,12 @@ class FooController implements RequestHandlerInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
      * @inheritdoc
      */
-    public function handle(ServerRequestInterface $request, array $args = []): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse(200);
-        $response = $response->withBody(Stream::create('Foo page ' . htmlspecialchars($args['name'])));
+        $response = $this->responseFactory->createResponse(404);
+        $response = $response->withBody(Stream::create('Handler not found'));
         return $response;
     }
 }

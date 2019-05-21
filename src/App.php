@@ -7,37 +7,27 @@ namespace FrolKr\PhpFramework;
 use FrolKr\PhpFramework\Middleware\ErrorHandler;
 use FrolKr\PhpFramework\Middleware\ResponseFactory;
 use FrolKr\PhpFramework\Middleware\SymfonyRouting;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Relay\RelayBuilder;
-use Symfony\Component\Routing\Router;
 
 class App implements RequestHandlerInterface
 {
-    /** @var Router */
-    private $router;
+    /** @var ContainerInterface */
+    private $container;
 
-    /** @var RelayBuilder  */
-    private $relayBuilder;
-
-    /** @var ResponseFactoryInterface */
-    private $httpResponseFactory;
+    /** @var bool */
+    private $isDebug;
 
     /**
-     * @param Router $router
-     * @param RelayBuilder $relayBuilder
-     * @param ResponseFactoryInterface $httpResponseFactory
+     * @param ContainerInterface $container
+     * @param bool $isDebug
      */
-    public function __construct(
-        Router $router,
-        RelayBuilder $relayBuilder,
-        ResponseFactoryInterface $httpResponseFactory
-    ) {
-        $this->router = $router;
-        $this->relayBuilder = $relayBuilder;
-        $this->httpResponseFactory = $httpResponseFactory;
+    public function __construct(ContainerInterface $container, bool $isDebug) {
+        $this->container = $container;
+        $this->isDebug = $isDebug;
     }
 
     /**
@@ -45,11 +35,13 @@ class App implements RequestHandlerInterface
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface {
-        $relay = $this->relayBuilder->newInstance([
-            new ErrorHandler(),
-            new SymfonyRouting($this->router),
-            new ResponseFactory($this->httpResponseFactory)
-        ]);
-        return $relay->handle($request);
+        $dispatcher = (new RelayBuilder())->newInstance(
+            [
+                $this->container->get(ErrorHandler::class),
+                $this->container->get(SymfonyRouting::class),
+                $this->container->get(ResponseFactory::class),
+            ]
+        );
+        return $dispatcher->handle($request);
     }
 }

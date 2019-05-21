@@ -4,35 +4,21 @@ declare(strict_types = 1);
 
 use FrolKr\PhpFramework\App;
 
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Nyholm\Psr7Server\ServerRequestCreator;
+use Nyholm\Psr7Server\ServerRequestCreatorInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
-use Symfony\Component\Routing\Router;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$appRoot = dirname(__DIR__);
+define('APP_ROOT', dirname(__DIR__));
 
-$router = new Router(
-    new YamlFileLoader(new FileLocator([$appRoot . '/etc'])),
-    'routes.yml',
-    ['cache_dir' => $appRoot . '/var/cache']
-);
+$isDebug = getenv('DEBUG') === 'true' ? true : false;
 
-$psrHttpFactory = new Psr17Factory();
-$request = (new ServerRequestCreator(
-    $psrHttpFactory,
-    $psrHttpFactory,
-    $psrHttpFactory,
-    $psrHttpFactory
-))->fromGlobals();
+$container = \FrolKr\PhpFramework\ContainerFactory::create(APP_ROOT, $isDebug);
 
-$app = (new App($router, new Relay\RelayBuilder(), $psrHttpFactory));
+/** @var ServerRequestCreatorInterface $httpRequestFactory */
+$httpRequestFactory = $container->get(ServerRequestCreatorInterface::class);
+$response = (new App($container, $isDebug))->handle($httpRequestFactory->fromGlobals());
 
-$response = $app->handle($request);
-
-(new HttpFoundationFactory)
+$container->get(HttpFoundationFactory::class)
     ->createResponse($response)
     ->send();
