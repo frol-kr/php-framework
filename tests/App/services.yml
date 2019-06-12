@@ -1,0 +1,19 @@
+parameters:
+  cacheDir: '%appRoot%/tests/var/cache'
+  routeDirs:
+    - '%appRoot%/tests/App'
+
+services:
+  # controllers
+  Tests\App\MockController\:
+    resource: '../../tests/App/MockController/*'
+    public: true
+    autowire: true
+
+  # routing
+  Symfony\Component\Routing\Router:
+    class: Symfony\Component\Routing\Router
+    public: true
+    arguments:
+      $loader: '@Symfony\Component\Config\Loader\LoaderInterface'
+      $resource: 'routes.yml'

@@ -1,0 +1,11 @@
+test_index:
+  path: /
+  controller: Tests\App\MockController\IndexController
+  methods: ['GET']
+  defaults: { _action: 'handle' }
+
+test_exception:
+  path: /exception/route
+  controller: Tests\App\MockController\ExceptionController
+  methods: ['GET']
+  defaults: { _action: 'handle' }

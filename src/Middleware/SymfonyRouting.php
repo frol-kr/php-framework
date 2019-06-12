@@ -41,6 +41,7 @@ class SymfonyRouting implements MiddlewareInterface
         $symfonyRequest = (new HttpFoundationFactory())->createRequest($request);
         $this->routing->setContext((new RequestContext())->fromRequest($symfonyRequest));
 
+
         try {
             $handlerMeta = $this->routing->matchRequest($symfonyRequest);
         } catch (ResourceNotFoundException $e) {

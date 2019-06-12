@@ -1,8 +1,8 @@
-<?php // src/Controller/IndexController.php
+<?php
 
 declare(strict_types = 1);
 
-namespace FrolKr\PhpFramework\Controller;
+namespace Tests\App\MockController;
 
 use Nyholm\Psr7\Stream;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -29,7 +29,7 @@ class IndexController implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->responseFactory->createResponse(200);
-        $response = $response->withBody(Stream::create('Index page'));
+        $response = $response->withBody(Stream::create('Test index page'));
         return $response;
     }
 }

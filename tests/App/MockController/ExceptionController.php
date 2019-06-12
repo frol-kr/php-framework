@@ -1,16 +1,15 @@
-<?php // src/Controller/IndexController.php
+<?php
 
 declare(strict_types = 1);
 
-namespace FrolKr\PhpFramework\Controller;
+namespace Tests\App\MockController;
 
-use Nyholm\Psr7\Stream;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class IndexController implements RequestHandlerInterface
+class ExceptionController implements RequestHandlerInterface
 {
     /** @var ResponseFactoryInterface */
     private $responseFactory;
@@ -25,11 +24,10 @@ class IndexController implements RequestHandlerInterface
 
     /**
      * @inheritdoc
+     * @throws \Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse(200);
-        $response = $response->withBody(Stream::create('Index page'));
-        return $response;
+        throw new \Exception('Unpredicted exception occured');
     }
 }

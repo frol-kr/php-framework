@@ -20,8 +20,6 @@ class ErrorHandler implements MiddlewareInterface
     {
         try {
             $response = $handler->handle($request);
-        } catch (ResourceNotFoundException $e) {
-            $response = new Response(404, [], 'Handler not found', '1.1');
         } catch (\Exception $e) {
             $response = new Response(500, [], 'Internal server error', '1.1');
         }
