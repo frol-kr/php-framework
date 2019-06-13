@@ -20,10 +20,17 @@ class AbstractApp extends TestCase
     /**
      * @inheritdoc
      */
+    public static function setUpBeforeClass()
+    {
+        define('APP_ROOT', dirname(__DIR__));
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         parent::setUp();
-        define('APP_ROOT', dirname(__DIR__));
         $this->container = $this->createContainer();
     }
 
